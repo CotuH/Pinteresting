@@ -7,4 +7,5 @@ By [Cotu H]
 Who's the man?
 You Da Man
 
-who's the man
+who's the man?
+Told you... U da man
