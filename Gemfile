@@ -8,7 +8,8 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
-gem 'bootstrap-sass', <!# url, version, etc no longer needed for bootstrap gem> 
+gem 'bootstrap-sass' # url, version, etc no longer needed for bootstrap gem
+gem 'devise', '~> 3.3.0'
 
 group :development, :test do
   gem 'sqlite3'
