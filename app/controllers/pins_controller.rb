@@ -6,6 +6,7 @@ class PinsController < ApplicationController
   end
 
   def show
+    @pin = Pin.find pin_params [:id]
   end
 
   def new
@@ -17,7 +18,8 @@ class PinsController < ApplicationController
 
   def create
     @pin = Pin.new(pin_params)
-    if @pin.save
+    @pin.user_id = current_user.id
+        if @pin.save
       redirect_to @pin, notice: 'Pin was successfully created.' 
     else
       render action: 'new' 
