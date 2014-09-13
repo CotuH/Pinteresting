@@ -6,39 +6,36 @@ class PinsController < ApplicationController
   end
 
   def show
-    @pin = Pin.find pin_params [:id]
   end
 
   def new
-    @pin = Pin.new
+    @pin = current_user.pins.build
   end
 
   def edit
   end
 
   def create
-    @pin = Pin.new(pin_params)
-    @pin.user_id = current_user.id
-        if @pin.save
-      redirect_to @pin, notice: 'Pin was successfully created.' 
+    @pin = current_user.pins.build(pin_params)
+    if @pin.save
+      redirect_to @pin, notice: 'Pin was successfully created.'
     else
-      render action: 'new' 
-    end  
+      render action: 'new'
+    end
   end
 
   def update
     if @pin.update(pin_params)
-      redirect_to @pin, notice: 'Pin was successfully updated.' 
+      redirect_to @pin, notice: 'Pin was successfully updated.'
     else
-      render action: 'edit' 
+      render action: 'edit'
     end
   end
 
   def destroy
     @pin.destroy
-    redirect_to pins_url 
+    redirect_to pins_url
   end
-  
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -46,8 +43,13 @@ class PinsController < ApplicationController
       @pin = Pin.find(params[:id])
     end
 
+    def correct_user
+      @pin = current_user.pins.find_by(id: params[:id])
+      redirect_to pins_path, notice: "Not authorized to edit this pin" if @pin.nil?
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
-   def pin_params
-      params.require(:pin).permit(:description)
+    def pin_params
+      params.require(:pin).permit(:description, :image)
     end
 end
